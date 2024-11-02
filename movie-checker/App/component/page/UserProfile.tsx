@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import UserService from "../../services/UserService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import login from "../../services/AuthService";
+import { api } from "../../api/Api";
 
-const UserProfileScreen = () => {
-    const [userData, setUserData] = useState(null);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [age, setAge] = useState("");
+const UserProfilePage = () => {
+    type User = {
+        userId: string;
+        email: string;
+        firstname: string;
+        lastname: string;
+        age: number;
+        password: string;
+    };
+    
+
+    const [userData, setUserData] = useState<User>();    
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userId = await AsyncStorage.getItem("userId");
-                if (userId) {
-                    const data = await UserService().getCurrentUserData(userId); // nur userId übergeben
-                    setUserData(data);
-                } else {
-                    console.log("User ID not found in AsyncStorage");
-                }
+                const data = await UserService().getUserData();
+                setUserData(data);
             } catch (error) {
                 console.error("Error fetching user data:", error);
             }
@@ -27,8 +29,6 @@ const UserProfileScreen = () => {
         
         fetchData();
     }, []);
-
-
 
     return (
         <View>
@@ -45,4 +45,4 @@ const UserProfileScreen = () => {
     );
 };
 
-export default UserProfileScreen;
+export default UserProfilePage;
