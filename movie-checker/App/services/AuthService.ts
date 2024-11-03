@@ -1,47 +1,27 @@
-import { AxiosInstance } from "axios";
-/*import { defaultInstance } from "../api/Api";*/
 import { api } from "../api/Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-
-
-
 export const login = async (email: string, password: string) => {
-    try {
-      const response = await api.post("login", {
-        email: email,
-        password: password,
-      });
-      const { accessToken, user } = response.data;
-      AsyncStorage.setItem("accessToken", accessToken);
+  try {
+    const response = await api.post("login", {
+      email: email,
+      password: password,
+    });
+
+    const { accessToken, user } = response.data;
+    AsyncStorage.setItem("accessToken", accessToken);
+    if (user && user.id) {
       await AsyncStorage.setItem("userId", user.id.toString());
-
+    } else {
+      console.log("UserId could not be found");
+    }
     return response;
-    } catch (error) {
-      throw error;
-    }
-  };
+  } catch (error) {
+    throw error;
+  }
+};
 
-
-  export const getAuthorizationToken = () => {
-    const accessToken = AsyncStorage.getItem("accessToken");
-    if (!accessToken) {
-      throw new Error("no token");
-    }
-    return {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-  };
-
-
-
-
-
-
-
+// This code will be used when LoginPage is implemented
 
 /*export type loginRequest = {
     email: "gianluca@noseryoung.ch", //string
@@ -58,7 +38,7 @@ const LoginService = (api: AxiosInstance = defaultInstance) => ({
         await AsyncStorage.setItem("userId", user.id.toString());
         console.log("User ID saved to AsyncStorage:", user.id);
       } else {
-        console.log("User ID is missing in the response data");
+        console.log("UserId could not be found");
       }
   
       return answer;
@@ -66,5 +46,4 @@ const LoginService = (api: AxiosInstance = defaultInstance) => ({
   });
 
 */
-  export default login;
-  
+export default login;
