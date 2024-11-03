@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from "../api/Api";
-import { getAuthorizationToken, login } from './AuthService';
+import { login } from './AuthService';
 
 export type User = {
     userId: string;
@@ -14,23 +14,11 @@ export type User = {
 const email = "gianluca@noseryoung.ch";
 const password = "bestPassw0rd";
 
-const config = getAuthorizationToken();
 
 const UserService = () => ({
-    getUserData: async () => {
-        await login(email, password);
-        try {
-            const userId = await AsyncStorage.getItem("userId");
-            const response = await api.get(`users/${userId}`, config);
-            return response.data;
-    } catch (error) {
-        console.error("Error occurred:", error);
-        return {} as User;
-    }
-    },
-
 
     getCurrentUserData: async (): Promise<User> => {
+        await login(email, password);
         try {
             const userId = await AsyncStorage.getItem("userId");
             if (!userId) {
