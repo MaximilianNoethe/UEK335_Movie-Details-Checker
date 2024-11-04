@@ -1,12 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { PaperProvider } from 'react-native-paper';
-import UserProfilePage from './App/component/page/UserProfile';
+import { StyleSheet } from 'react-native';
+import NavBar from "./App/component/molecule/NavBar";
+import {PaperProvider} from "react-native-paper";
+
+
 
 export default function App() {
   return (
     <PaperProvider>
-      <UserProfilePage/>
+      <NavBar/>
     </PaperProvider>
   );
 }
