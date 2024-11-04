@@ -28,7 +28,7 @@ const MoviePage = () => {
         const fetchData = async () => {
             try {
                 const data = await MovieService().getAllMovies();
-                setMovieData(data);
+                setMovieData(data[0]);
             } catch (error) {
                 console.error("Error fetching movie data:", error);
             }
@@ -47,7 +47,10 @@ const MoviePage = () => {
                 <IconButton
                     icon="pencil"
                     size={24}
-                    onPress={() => console.log("Navigate to MovieEditPage")}
+                    onPress={async () => {
+                        const randomMovie = await MovieService().getRandomMovie();
+                        setMovieData(randomMovie);
+                    }}
                     style={styles.editIcon}
                 />
             </View>

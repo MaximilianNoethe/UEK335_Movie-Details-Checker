@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 
 export const api: AxiosInstance = axios.create({
-    baseURL: "http://10.62.105.108:3000/", // Change this to your own IP address
+    baseURL: "http://192.168.1.18:3000/", // Change this to your own IP address
   });
   
 
