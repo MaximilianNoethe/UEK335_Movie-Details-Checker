@@ -3,8 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomePage from "../page/HomePage";
 import MoviePage from "../page/MoviePage";
-import UserProfilePage from "../page/UserProfilePage";
 import {IconButton, Provider} from "react-native-paper";
+import UserProfile from "../page/UserProfile";
 
 const Tab = createBottomTabNavigator();
 export default function NavBar() {
@@ -58,7 +58,7 @@ export default function NavBar() {
                 />
                 <Tab.Screen
                     name="User"
-                    component={UserProfilePage}
+                    component={UserProfile}
                     options={{
                         tabBarIcon : ({focused})=> (
                             <IconButton icon="account-circle" size={40} iconColor={focused ?"#B0B0B0": "#FFFFFF"} style={{marginBottom: -5}}/>
