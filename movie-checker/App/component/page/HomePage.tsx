@@ -53,45 +53,51 @@ export default function HomePage() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.container}>
-       
-        <Text style={styles.welcomeText}>
-          Welcome Back, {userData ? userData.firstname : "Guest"}!
-        </Text>
+      <Text style={styles.welcomeText}>
+        Welcome Back,
+      </Text>
+      <Text style={styles.welcomeText}>
+        {userData ? userData.firstname : "Guest"}!
+      </Text>
 
-        
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Random movie</Text>
-          <View style={styles.movieCardContainer}>
-            {randomMovie ? (
-              <MovieCard movie={randomMovie} />
-            ) : (
-              <Card style={styles.movieCardPlaceholder}>
-                <Text style={styles.placeholderText}>Loading...</Text>
-              </Card>
-            )}
-            
-            <IconButton
+      <View style={styles.sectionContainer}>
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>
+            Random movie
+          </Text>
+          <IconButton
               icon="reload"
               size={24}
               iconColor="#FFFFFF"
               onPress={fetchRandomMovie}
               style={styles.reloadButton}
-            />
-          </View>
+          />
         </View>
-
-        
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Info</Text>
-          <Card style={styles.countCard}>
-            <Text style={styles.countText}>
-              Total movie count:{" "}
-              {movieCount !== null ? movieCount : "Loading..."}
-            </Text>
-          </Card>
+        <View style={styles.movieCardContainer}>
+          {randomMovie ? (
+              <MovieCard movie={randomMovie} />
+          ) : (
+              <Card style={styles.movieCardPlaceholder}>
+                <Text style={styles.placeholderText}>Loading...</Text>
+              </Card>
+          )}
         </View>
       </View>
+
+      <View style={styles.sectionContainer}>
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>
+            Info
+          </Text>
+        </View>
+        <Card style={styles.countCard}>
+          <Text style={styles.countText}>
+            Total movie count: {movieCount !== null ? movieCount : "Loading..."}
+          </Text>
+        </Card>
+      </View>
+
+
     </ScrollView>
   );
 }
@@ -99,50 +105,50 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    backgroundColor: "#AD3F57",
+    backgroundColor: "#B96F80",
     alignItems: "center",
-    paddingVertical: 20,
-  },
-  container: {
-    width: "90%",
-    alignItems: "center",
+    paddingVertical: 150,
   },
   welcomeText: {
     fontSize: 26,
-    color: "#FFFFFF",
-    marginBottom: 40,
+    color: "#FFFFFF", // Adjusted for more space between welcome text and sections
     fontWeight: "bold",
     textAlign: "center",
   },
   sectionContainer: {
-    width: "100%",
-    alignItems: "flex-start",
-    marginBottom: 30,
+    width: "90%",
+    alignItems: "center",
+    marginBottom: 40,
+    marginTop: 40
+  },
+  sectionTitleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+    alignItems: "center",
+    marginBottom: 10,
   },
   sectionTitle: {
     color: "#FFFFFF",
     fontSize: 18,
-    marginBottom: 10,
-    marginLeft: 5,
-  },
-  movieCardContainer: {
-    position: "relative",
-    alignItems: "center",
+    textAlign: "left"
   },
   reloadButton: {
-    position: "absolute",
-    top: 10,
-    right: 10,
     backgroundColor: "#8C4C5C",
     borderRadius: 50,
+  },
+  movieCardContainer: {
+    alignItems: "center",
+    width: "100%",
   },
   movieCardPlaceholder: {
     backgroundColor: "#8C4C5C",
     borderRadius: 15,
-    width: 330,
-    padding: 20,
+    width: "100%",
+    paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
   },
   placeholderText: {
     color: "#FFFFFF",
@@ -150,7 +156,7 @@ const styles = StyleSheet.create({
   },
   countCard: {
     backgroundColor: "#8C4C5C",
-    width: 330,
+    width: "100%",
     borderRadius: 15,
     paddingVertical: 15,
     alignItems: "center",

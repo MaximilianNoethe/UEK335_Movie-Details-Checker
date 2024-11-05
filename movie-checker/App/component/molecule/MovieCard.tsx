@@ -9,7 +9,6 @@ type MovieCardProps = {
 
 export default function MovieCard({movie}: MovieCardProps) {
     return (
-        <View style={styles.container}>
             <Card style={moviecard.cardContainer}>
                 <Card.Content>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
@@ -38,7 +37,7 @@ export default function MovieCard({movie}: MovieCardProps) {
                     </View>
                 </Card.Content>
             </Card>
-        </View>
+
     );
 }
 
