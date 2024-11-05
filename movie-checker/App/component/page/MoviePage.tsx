@@ -1,6 +1,9 @@
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from 'react-native';
 import MovieCard from "../molecule/MovieCard";
 import {MovieDetails} from "../../models/models";
+import MovieService from "../../services/MovieService";
+
 
 const testmovie : MovieDetails = {
     Title: "Mad Max",
