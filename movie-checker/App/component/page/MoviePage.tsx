@@ -1,7 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { Avatar, TextInput, IconButton } from "react-native-paper";
-import MovieService from "../../services/MovieService";
+import { StyleSheet, View } from 'react-native';
+import MovieCard from "../molecule/MovieCard";
+import {MovieDetails} from "../../models/models";
+
+const testmovie : MovieDetails = {
+    Title: "Mad Max",
+    "Release Date": "Okt 18 2006",
+    "MPAA Rating": "R",
+    "Running Time min": "120min",
+    "Major Genre": "Horror",
+    Director: "Martin Scorcese",
+    "Rotten Tomatoes Rating": 20,
+    "IMDB Rating" : 7.3,
+    id: 2
+}
 
 const MoviePage = () => {
     type Movie = {
@@ -40,66 +51,10 @@ const MoviePage = () => {
     return (
         <View style={styles.container}>
 
-            <View style={styles.topBorder} /> 
-            
-            <View style={styles.header}>
-                <Avatar.Icon size={95} icon="film" style={styles.avatar} />
-                <IconButton
-                    icon="pencil"
-                    size={24}
-                    onPress={async () => {
-                        const randomMovie = await MovieService().getRandomMovie();
-                        setMovieData(randomMovie);
-                    }}
-                    style={styles.editIcon}
-                />
-            </View>
-
-            <TextInput
-                label="Title"
-                value={movieData.Title}
-                mode="outlined"
-                style={styles.input}
-                editable={false}
-            />
-            <TextInput
-                label="Release Date"
-                value={movieData["Release Date"]}
-                mode="outlined"
-                style={styles.input}
-                editable={false}
-            />
-            <TextInput
-                label="MPAA Rating"
-                value={movieData["MPAA Rating"]}
-                mode="outlined"
-                style={styles.input}
-                editable={false}
-            />
-            <TextInput
-                label="Running Time (min)"
-                value={movieData["Running Time min"] ? `${movieData["Running Time min"]} min` : "N/A"}
-                mode="outlined"
-                style={styles.input}
-                editable={false}
-            />
-            <TextInput
-                label="IMDB Rating"
-                value={movieData["IMDB Rating"] ? movieData["IMDB Rating"].toString() : "N/A"}
-                mode="outlined"
-                style={styles.input}
-                editable={false}
-            />
-            <TextInput
-                label="IMDB Votes"
-                value={movieData["IMDB Votes"] ? movieData["IMDB Votes"].toLocaleString() : "N/A"}
-                mode="outlined"
-                style={styles.input}
-                editable={false}
-            />
+            <MovieCard movie={testmovie} />
         </View>
-    );
-};
+);
+}
 
 const styles = StyleSheet.create({
     container: {
