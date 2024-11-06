@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Avatar, TextInput, IconButton } from "react-native-paper";
 import UserService from "../../services/UserService";
+import LoginService from "../../services/AuthService";
 
 const UserProfilePage = () => {
     type User = {
@@ -43,7 +44,7 @@ const UserProfilePage = () => {
                 <IconButton
                     icon="pencil"
                     size={24}
-                    onPress={() => console.log("Navigate to ProfileEditPage")}
+                    //onPress={() => LoginService().logout()}
                     style={styles.editIcon}
                 />
             </View>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Text, TextInput } from "react-native-paper";
-import { View, StyleSheet, Alert } from "react-native";
-import login from "../../services/AuthService";
+import { View, StyleSheet } from "react-native";
+import LoginService from "../../services/AuthService";
 
 const LoginPage = ({navigation}) => {
   const [email, setEmail] = useState("");
@@ -22,21 +22,16 @@ const LoginPage = ({navigation}) => {
     }
   };
 
-  const handleLogin = () => {
-    /*
-    if (!validateEmail(email)) {
-      Alert.alert("Invalid Email", "Please enter a valid email address");
-      return;
-    }
-    if (!password) {
-      Alert.alert("Missing Password", "Please enter your password");
-      return;
-    }
+  const handleLogin = async () => {
+    try {
+        const response = await LoginService().login({ email, password });        
 
-    login(email, password);
-
-     */
-    navigation.navigate("Home");
+        if (response) {
+          navigation.navigate("Home"); 
+        }
+      } catch (error) {
+        throw error;
+      }
   };
 
   return (
@@ -73,7 +68,7 @@ const LoginPage = ({navigation}) => {
           <Text
             variant="labelMedium"
             style={styles.registerText}
-            onPress={() => console.log("Navigate to Register Page")}
+            onPress={() => navigation.navigate("Register")}
           >
             No account? Register here
           </Text>
