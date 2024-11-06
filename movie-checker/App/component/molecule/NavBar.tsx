@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomePage from "../page/HomePage";
 import MoviePage from "../page/MoviePage";
-import {IconButton, Provider} from "react-native-paper";
+import {IconButton} from "react-native-paper";
 import UserProfile from "../page/UserProfile";
 import LoginPage from "../page/LoginPage";
 import MovieDetailPage from "../page/MovieDetailPage";

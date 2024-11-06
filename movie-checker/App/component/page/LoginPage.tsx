@@ -23,6 +23,7 @@ const LoginPage = ({navigation}) => {
   };
 
   const handleLogin = () => {
+    /*
     if (!validateEmail(email)) {
       Alert.alert("Invalid Email", "Please enter a valid email address");
       return;
@@ -33,6 +34,8 @@ const LoginPage = ({navigation}) => {
     }
 
     login(email, password);
+
+     */
     navigation.navigate("Home");
   };
 

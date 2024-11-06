@@ -1,6 +1,5 @@
-import {StyleSheet, Button, View, Text} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import MovieCardDetail from "../molecule/MovieDetailCard";
-import {MovieDetails} from "../../models/models";
 import RatingCard from "../molecule/RatingCard";
 import {IconButton} from "react-native-paper";
 import React from "react";

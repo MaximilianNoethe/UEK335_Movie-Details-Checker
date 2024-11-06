@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import { Animated, StyleSheet, View, Text } from 'react-native';
 import MovieCard from "../molecule/MovieCard";
 import { MovieDetails } from "../../models/models";
@@ -8,6 +8,7 @@ import {useFocusEffect} from "@react-navigation/native";
 
 const MoviePage = ({navigation}) => {
     const [moviesData, setMoviesData] = useState<MovieDetails[]>([]);
+    const [isAscending, setIsAscending] = useState(true);
 
     const fetchData = async () => {
         try {
@@ -27,6 +28,16 @@ const MoviePage = ({navigation}) => {
         navigation.navigate("MovieDetails", {movie})
     };
 
+    const sortMovies = () => {
+        const sortedMovies = [ ...moviesData].sort((a, b) =>{
+           if (a.Title < b.Title) return isAscending ? -1 : 1;
+           if (a.Title > b.Title) return isAscending ? 1 : -1;
+           return 0;
+        });
+        setMoviesData(sortedMovies);
+        setIsAscending (!isAscending);
+    }
+
 
     return (
         <View>
@@ -36,10 +47,10 @@ const MoviePage = ({navigation}) => {
                         Movies
                     </Text>
                     <IconButton
-                        icon="sort-alphabetical-variant"
+                        icon={isAscending ? "sort-alphabetical-ascending-variant" : "sort-alphabetical-descending-variant"}
                         size={24}
                         iconColor="#fff"
-                        onPress={() => console.log("Delete Movie")}
+                        onPress={sortMovies}
                         style={{ ...styles.iconButton, borderColor: '#fff', borderWidth: 2 }}
                     />
                 </View>
