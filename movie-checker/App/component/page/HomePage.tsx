@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   countCard: {
-    backgroundColor: "#8C4C5C",
-    width: "100%",
+    backgroundColor: "#AD3F57",
+    width: "90%",
     borderRadius: 15,
     paddingVertical: 15,
     alignItems: "center",
@@ -164,5 +164,7 @@ const styles = StyleSheet.create({
   countText: {
     fontSize: 18,
     color: "#FFFFFF",
+    alignSelf: "center",
+    paddingVertical: 20
   },
 });
