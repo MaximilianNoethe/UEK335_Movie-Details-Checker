@@ -5,20 +5,24 @@ import MovieService from "../../services/MovieService";
 
 export default function CreateMoviePage() {
   const [title, setTitle] = useState("");
+  const [director, setDirector] = useState("");
+  const [genre, setGenre] = useState("");
   const [releaseDate, setReleaseDate] = useState("");
-  const [mpaaRating, setMpaaRating] = useState("");
   const [runningTime, setRunningTime] = useState("");
   const [imdbRating, setImdbRating] = useState("");
-  const [imdbVotes, setImdbVotes] = useState("");
+  const [rtRating, setRtRating] = useState("");
+  const [mpaaRating, setMpaaRating] = useState("");
 
   const handleCreate = async () => {
     const newMovie = {
       Title: title,
       "Release Date": releaseDate,
+      "Director": director,
+      "Genre": genre,
       "MPAA Rating": mpaaRating,
       "Running Time min": parseInt(runningTime, 10),
       "IMDB Rating": parseFloat(imdbRating),
-      "IMDB Votes": parseInt(imdbVotes, 10),
+      "Rotten Tomatoes Rating": parseInt(rtRating, 10),
     };
 
     try {
@@ -48,16 +52,23 @@ export default function CreateMoviePage() {
         style={styles.input}
       />
       <TextInput
+          label="Director"
+          value={director}
+          onChangeText={setDirector}
+          mode="outlined"
+          style={styles.input}
+      />
+      <TextInput
+          label="Genre"
+          value={genre}
+          onChangeText={setGenre}
+          mode="outlined"
+          style={styles.input}
+      />
+      <TextInput
         label="Release Date"
         value={releaseDate}
         onChangeText={setReleaseDate}
-        mode="outlined"
-        style={styles.input}
-      />
-      <TextInput
-        label="MPAA Rating"
-        value={mpaaRating}
-        onChangeText={setMpaaRating}
         mode="outlined"
         style={styles.input}
       />
@@ -69,22 +80,31 @@ export default function CreateMoviePage() {
         style={styles.input}
         keyboardType="numeric"
       />
-      <TextInput
-        label="IMDB Rating"
-        value={imdbRating}
-        onChangeText={setImdbRating}
-        mode="outlined"
-        style={styles.input}
-        keyboardType="numeric"
-      />
-      <TextInput
-        label="IMDB Votes"
-        value={imdbVotes}
-        onChangeText={setImdbVotes}
-        mode="outlined"
-        style={styles.input}
-        keyboardType="numeric"
-      />
+      <View style={styles.ratingContainer}>
+        <TextInput
+            label="MPAA Rating"
+            value={mpaaRating}
+            onChangeText={setMpaaRating}
+            mode="outlined"
+            style={styles.ratingInput}
+        />
+        <TextInput
+            label="IMDB Rating"
+            value={imdbRating}
+            onChangeText={setImdbRating}
+            mode="outlined"
+            style={styles.ratingInput}
+            keyboardType="numeric"
+        />
+        <TextInput
+            label="Rotten Tomatoes"
+            value={rtRating}
+            onChangeText={setRtRating}
+            mode="outlined"
+            style={styles.ratingInput}
+            keyboardType="numeric"
+        />
+      </View>
 
       <View style={styles.buttonContainer}>
         <Button
@@ -97,6 +117,7 @@ export default function CreateMoviePage() {
         </Button>
         <Button
           mode="outlined"
+          theme={{colors: { primary: '#621827'}}}
           onPress={handleCancel}
           style={styles.cancelButton}
         >
@@ -122,6 +143,16 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 10,
   },
+  ratingInput: {
+    marginBottom: 10,
+    width: "30%",
+  },
+  ratingContainer: {
+    flex:0,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignContent: "stretch",
+  },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -129,12 +160,10 @@ const styles = StyleSheet.create({
   },
   createButton: {
     backgroundColor: "#AD3F57",
-    borderRadius: 8,
     paddingHorizontal: 30,
   },
   cancelButton: {
     borderColor: "#AD3F57",
-    borderRadius: 8,
     paddingHorizontal: 30,
   },
 });
