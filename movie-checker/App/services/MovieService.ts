@@ -2,7 +2,6 @@ import { api } from "../api/Api";
 import login from "./AuthService";
 
 type Movie = {
-  id: number;
   Title: string;
   "Release Date": string;
   "MPAA Rating": string;
