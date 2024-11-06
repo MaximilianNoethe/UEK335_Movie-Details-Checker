@@ -68,7 +68,7 @@ const LoginPage = ({navigation}) => {
           <Text
             variant="labelMedium"
             style={styles.registerText}
-            onPress={() => console.log("Navigate to Register Page")}
+            onPress={() => navigation.navigate("Register")}
           >
             No account? Register here
           </Text>
