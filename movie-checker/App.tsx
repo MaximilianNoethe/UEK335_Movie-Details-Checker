@@ -5,6 +5,8 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import HomePage from "./App/component/page/HomePage";
 import {NavigationContainer} from "@react-navigation/native";
 import LoginPage from "./App/component/page/LoginPage";
+import MoviePage from './App/component/page/MoviePage';
+
 
 const Stack = createNativeStackNavigator();
 
