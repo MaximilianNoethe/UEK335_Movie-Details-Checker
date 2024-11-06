@@ -1,5 +1,5 @@
-import { api } from "../api/Api";
-import login from "./AuthService";
+import { AxiosInstance } from "axios";
+import { defaultInstance } from "../api/Api";
 
 type Movie = {
   id: number;
@@ -13,12 +13,9 @@ type Movie = {
   "IMDB Votes"?: number;
 };
 
-const email = "gianluca@noseryoung.ch";
-const password = "bestPassw0rd";
 
-const MovieService = () => ({
+const MovieService = (api: AxiosInstance = defaultInstance) => ({
   getAllMovies: async () => {
-    await login(email, password);
     try {
       const response = await api.get(`movies?start=3182&_limit=1`);
       console.log(response.data);
@@ -29,7 +26,6 @@ const MovieService = () => ({
   },
 
   getMovieById: async (id: string) => {
-    await login(email, password);
     try {
       const response = await api.get(`movies/${id}`);
       return response.data;
@@ -39,7 +35,6 @@ const MovieService = () => ({
   },
 
   deleteMovie: async (id: string) => {
-    await login(email, password);
 
     try {
       const response = await api.delete(`movies/${id}`);
@@ -51,7 +46,6 @@ const MovieService = () => ({
   },
 
   createMovie: async (newMovie: Movie) => {
-    await login(email, password);
 
     try {
       const response = await api.post(`movies`, newMovie);
@@ -63,7 +57,6 @@ const MovieService = () => ({
   },
 
   updateMovie: async (id: string, updatedMovie: Movie) => {
-    await login(email, password);
 
     try {
       const response = await api.put(`movies/${id}`, updatedMovie);
@@ -75,18 +68,6 @@ const MovieService = () => ({
   },
 
   getRandomMovie: async () => {
-    /* Code snippet to use in HomePage.tsx to display random movie
-                    <IconButton
-                    icon="pencil"
-                    size={24}
-                    onPress={async () => {
-                        const randomMovie = await MovieService().getRandomMovie();
-                        setMovieData(randomMovie);
-                    }}
-                    style={styles.editIcon}
-                    />
-    */
-    await login(email, password);
     try {
       const response = await api.get(`movies`);
 
@@ -109,7 +90,6 @@ const MovieService = () => ({
   },
 
   getMovieCount: async () => {
-    await login(email, password);
     try {
         const response = await api.get(`movies`);
         
