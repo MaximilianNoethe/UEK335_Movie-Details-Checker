@@ -21,6 +21,14 @@ export const login = async (email: string, password: string) => {
   }
 };
 
+export const logout = async () => {
+  try {
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("userId");
+  } catch (error) {
+    throw error;
+  }
+};
 // This code will be used when LoginPage is implemented
 
 /*export type loginRequest = {
