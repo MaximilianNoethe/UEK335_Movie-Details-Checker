@@ -9,9 +9,7 @@ export type loginRequest = {
 };
 
 const LoginService = (api: AxiosInstance = defaultInstance) => ({
-  login: async (param: loginRequest) => {
-    console.log(param);
-    
+  login: async (param: loginRequest) => {    
     try {
       const response = await api.post("login", param);
       const { accessToken, user } = response.data;
@@ -28,11 +26,21 @@ const LoginService = (api: AxiosInstance = defaultInstance) => ({
       return response;
 
     } catch (error) {
-      console.error("Error during login:", error);
-      Alert.alert("Login Error", "An error occurred while logging in. Please try again.");
+      Alert.alert("Login Error", "An error occurred while logging in. Check your credentials and please try again.");
       throw error;
     }
   },
+  logout: async (navigate) => {
+    try {
+      await AsyncStorage.removeItem("accessToken");
+      await AsyncStorage.removeItem("userId");
+      //navigate("Login");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      Alert.alert("Logout Error", "An error occurred while logging out. Please try again.");
+      throw error;
+    }
+  }
 });
 
 export default LoginService;
