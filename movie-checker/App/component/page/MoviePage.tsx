@@ -29,6 +29,7 @@ const MoviePage = ({navigation}) => {
 
 
     return (
+        <View>
             <Animated.ScrollView endFillColor={"#B96F80"} contentContainerStyle={styles.scrollingContainer}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>
@@ -51,9 +52,10 @@ const MoviePage = ({navigation}) => {
                         <Text style={styles.placeholderText}>Loading movies...</Text>
                     </View>
                 )}
-                <FAB icon="plus" customSize={70} style={{position: "absolute"}}/>
             </Animated.ScrollView>
-
+            <FAB icon="plus" color="#fff" customSize={70}
+                 style={{position: "absolute", right: 20, bottom: 100, borderRadius: 50}}/>
+        </View>
     );
 }
 
