@@ -30,17 +30,19 @@ const LoginService = (api: AxiosInstance = defaultInstance) => ({
       throw error;
     }
   },
-  logout: async (navigate) => {
+
+  logout: async () => {
     try {
       await AsyncStorage.removeItem("accessToken");
       await AsyncStorage.removeItem("userId");
-      //navigate("Login");
     } catch (error) {
       console.error("Error during logout:", error);
       Alert.alert("Logout Error", "An error occurred while logging out. Please try again.");
       throw error;
     }
   }
+
+
 });
 
 export default LoginService;

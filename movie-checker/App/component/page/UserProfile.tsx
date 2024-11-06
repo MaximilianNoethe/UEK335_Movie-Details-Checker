@@ -3,11 +3,9 @@ import { View, StyleSheet } from "react-native";
 import { Avatar, TextInput, IconButton } from "react-native-paper";
 import UserService from "../../services/UserService";
 import LoginService from "../../services/AuthService";
-import { useNavigation } from "@react-navigation/native";
 
 
-const UserProfilePage = () => {
-    const navigation = useNavigation();
+const UserProfilePage = ({navigation}) => {
 
 
     type User = {
@@ -39,6 +37,17 @@ const UserProfilePage = () => {
         fetchData();
     }, []);
 
+
+    const handleLogout = async(): Promise<void> => {
+        try {
+            await LoginService().logout();
+            navigation.navigate("Login");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     return (
         <View style={styles.container}>
 
@@ -49,7 +58,7 @@ const UserProfilePage = () => {
                 <IconButton
                     icon="logout"
                     size={24}
-                    onPress={() => LoginService().logout(navigation.navigate)}
+                    onPress={() => handleLogout()}
                     style={styles.editIcon}
                 />
             </View>
