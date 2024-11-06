@@ -4,12 +4,13 @@ import {MovieDetails} from "../../models/models";
 
 type MovieCardProps = {
     movie: MovieDetails;
+    onSelect: () => void;
 }
 
 
-export default function MovieCard({movie}: MovieCardProps) {
+export default function MovieCard({movie, onSelect}: MovieCardProps) {
     return (
-            <Card style={moviecard.cardContainer}>
+            <Card style={moviecard.cardContainer} onPress={onSelect}>
                 <Card.Content>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
                         <View style={{flexDirection: 'column'}}>
@@ -45,7 +46,8 @@ const moviecard = StyleSheet.create({
     cardContainer: {
         backgroundColor: '#AD3F57',
         borderRadius: 15,
-        width: 330
+        width: 330,
+        margin: 15
     },
     fontAndColor : {
         fontFamily: "Roboto",

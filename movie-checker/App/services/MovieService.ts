@@ -14,14 +14,16 @@ type Movie = {
 };
 
 
+
 const MovieService = (api: AxiosInstance = defaultInstance) => ({
-  getAllMovies: async () => {
+  getAllMovies: async (start = 3100, limit = 20) => {
     try {
-      const response = await api.get(`movies?start=3182&_limit=1`);
+      const response = await api.get(`movies?start=${start}&_limit=${limit}`);
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
+      return [];
     }
   },
 
@@ -34,11 +36,11 @@ const MovieService = (api: AxiosInstance = defaultInstance) => ({
     }
   },
 
-  deleteMovie: async (id: string) => {
 
+  deleteMovie: async (id: number) => {
     try {
       const response = await api.delete(`movies/${id}`);
-      console.log(response.data);
+      console.log("what",response.data);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
