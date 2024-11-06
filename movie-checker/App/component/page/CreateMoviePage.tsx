@@ -37,32 +37,36 @@ export default function CreateMoviePage() {
   };
 
   return (
-    <View>
-      <Text>Create Movie</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Create Movie</Text>
 
       <TextInput
         label="Movie Title"
         value={title}
         onChangeText={setTitle}
         mode="outlined"
+        style={styles.input}
       />
       <TextInput
         label="Release Date"
         value={releaseDate}
         onChangeText={setReleaseDate}
         mode="outlined"
+        style={styles.input}
       />
       <TextInput
         label="MPAA Rating"
         value={mpaaRating}
         onChangeText={setMpaaRating}
         mode="outlined"
+        style={styles.input}
       />
       <TextInput
         label="Running Time (min)"
         value={runningTime}
         onChangeText={setRunningTime}
         mode="outlined"
+        style={styles.input}
         keyboardType="numeric"
       />
       <TextInput
@@ -70,6 +74,7 @@ export default function CreateMoviePage() {
         value={imdbRating}
         onChangeText={setImdbRating}
         mode="outlined"
+        style={styles.input}
         keyboardType="numeric"
       />
       <TextInput
@@ -77,21 +82,59 @@ export default function CreateMoviePage() {
         value={imdbVotes}
         onChangeText={setImdbVotes}
         mode="outlined"
+        style={styles.input}
         keyboardType="numeric"
       />
 
-      <View>
+      <View style={styles.buttonContainer}>
         <Button
           mode="contained"
           onPress={handleCreate}
+          style={styles.createButton}
           labelStyle={{ color: "#FFFFFF" }}
         >
           Create
         </Button>
-        <Button mode="outlined" onPress={handleCancel}>
+        <Button
+          mode="outlined"
+          onPress={handleCancel}
+          style={styles.cancelButton}
+        >
           Cancel
         </Button>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#ffffff",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  input: {
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 20,
+  },
+  createButton: {
+    backgroundColor: "#AD3F57",
+    borderRadius: 8,
+    paddingHorizontal: 30,
+  },
+  cancelButton: {
+    borderColor: "#AD3F57",
+    borderRadius: 8,
+    paddingHorizontal: 30,
+  },
+});
