@@ -1,6 +1,9 @@
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from 'react-native';
 import MovieCard from "../molecule/MovieCard";
 import {MovieDetails} from "../../models/models";
+import MovieService from "../../services/MovieService";
+
 
 const testmovie : MovieDetails = {
     Title: "Mad Max",
@@ -14,10 +17,43 @@ const testmovie : MovieDetails = {
     id: 2
 }
 
+const MoviePage = () => {
+    type Movie = {
+        id: number;
+        Title: string;
+        "Release Date": string;
+        "MPAA Rating": string;
+        "Running Time min": number;
+        "IMDB Rating": number;
+        "IMDB Votes": number;
+    };
 
-export default function MoviePage() {
+    const [movieData, setMovieData] = useState<Movie>({
+        id: 0,
+        Title: "Failed to load data",
+        "Release Date": "Failed to load data",
+        "MPAA Rating": "Failed to load data",
+        "Running Time min": 0,
+        "IMDB Rating": 0,
+        "IMDB Votes": 0,
+    });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await MovieService().getAllMovies();
+                setMovieData(data[0]);
+            } catch (error) {
+                console.error("Error fetching movie data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <View style={styles.container}>
+
             <MovieCard movie={testmovie} />
         </View>
 );
@@ -26,8 +62,30 @@ export default function MoviePage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: "#ffffff",
+    },
+    topBorder: {
+        height: 100,
+        backgroundColor: "#8c5c68",
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 16,
+        marginTop: -40, 
+        marginBottom: 35,
+    },
+    avatar: {
+        backgroundColor: "#424242",
+    },
+    editIcon: {
+        marginLeft: "auto", 
+        marginTop: 50, 
+    },
+    input: {
+        marginHorizontal: 16,
+        marginBottom: 16,
     },
 });
+
+export default MoviePage;
