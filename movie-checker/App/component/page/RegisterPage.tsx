@@ -48,7 +48,7 @@ const RegisterPage = ({ navigation }) => {
 
   const handlePasswordChange = (text: string) => {
     setPassword(text);
-    setPasswordError("Retake your password");
+    setPasswordError(text.length >= 6 ? "" : "Password must be at least 6 characters");
   };
 
   const handleRegister = async () => {
