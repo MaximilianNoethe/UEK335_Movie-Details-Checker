@@ -5,14 +5,16 @@ import HomePage from "../page/HomePage";
 import MoviePage from "../page/MoviePage";
 import {IconButton, Provider} from "react-native-paper";
 import UserProfile from "../page/UserProfile";
+import LoginPage from "../page/LoginPage";
+import RegisterPage from "../page/RegisterPage";
 
 const Tab = createBottomTabNavigator();
 export default function NavBar() {
     return (
-        <Provider>
         <NavigationContainer>
             <View style={{flex: 1}}>
             <Tab.Navigator
+            initialRouteName="Login"
                 screenOptions={{
                     headerShown: false,
                     tabBarStyle: {
@@ -70,9 +72,13 @@ export default function NavBar() {
                         ),
                     }}
                 />
+                <Tab.Group screenOptions={{headerShown: false, tabBarStyle:{display: "none"}, tabBarItemStyle:{display: "none"}}} >
+                    <Tab.Screen name="Login" component={LoginPage} />
+                    <Tab.Screen name="Register" component={RegisterPage} />
+                </Tab.Group>
+                    
             </Tab.Navigator>
             </View>
         </NavigationContainer>
-        </Provider>
     )
 }

@@ -1,7 +1,6 @@
-import { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { api } from "../api/Api";
-import { login } from './AuthService';
+import { defaultInstance } from "../api/Api";
+import { AxiosInstance } from 'axios';
 
 export type User = {
     userId: string;
@@ -11,14 +10,10 @@ export type User = {
     age: number;
 };
 
-const email = "gianluca@noseryoung.ch";
-const password = "bestPassw0rd";
 
-
-const UserService = () => ({
+const UserService = (api: AxiosInstance = defaultInstance) => ({
 
     getCurrentUserData: async (): Promise<User> => {
-        await login(email, password);
         try {
             const userId = await AsyncStorage.getItem("userId");
             if (!userId) {
