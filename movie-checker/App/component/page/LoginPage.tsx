@@ -1,10 +1,43 @@
-import React from "react";
-import { Button, Text, PaperProvider, TextInput } from "react-native-paper";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Button, Text, TextInput } from "react-native-paper";
+import { View, StyleSheet, Alert } from "react-native";
+import login from "../../services/AuthService";
 
-export default function LoginPage() {
+const LoginPage = ({navigation}) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (input: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(input);
+  };
+
+  const handleEmailChange = (text: string) => {
+    setEmail(text);
+    if (!validateEmail(text)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handleLogin = () => {
+    if (!validateEmail(email)) {
+      Alert.alert("Invalid Email", "Please enter a valid email address");
+      return;
+    }
+    if (!password) {
+      Alert.alert("Missing Password", "Please enter your password");
+      return;
+    }
+
+    login(email, password);
+    navigation.navigate("Home");
+  };
+
   return (
-    <PaperProvider>
+    
       <View style={styles.container}>
         <View style={styles.header}>
           <Text variant="displaySmall" style={styles.title}>
@@ -13,13 +46,27 @@ export default function LoginPage() {
         </View>
 
         <View style={styles.formContainer}>
-          <TextInput mode="outlined" label="E-Mail" style={styles.input} />
+          <TextInput
+            mode="outlined"
+            label="E-Mail"
+            value={email}
+            onChangeText={handleEmailChange}
+            style={styles.input}
+            error={!!emailError}
+          />
+          {emailError ? (
+            <Text style={styles.errorText}>{emailError}</Text>
+          ) : null}
+
           <TextInput
             mode="outlined"
             label="Password"
             secureTextEntry
+            value={password}
+            onChangeText={setPassword}
             style={styles.input}
           />
+
           <Text
             variant="labelMedium"
             style={styles.registerText}
@@ -27,18 +74,21 @@ export default function LoginPage() {
           >
             No account? Register here
           </Text>
+
           <Button
             mode="contained"
-            onPress={() => console.log("Login pressed")}
+            onPress={handleLogin}
             style={styles.loginButton}
           >
             Login
           </Button>
         </View>
       </View>
-    </PaperProvider>
+    
   );
 }
+
+export default LoginPage;
 
 const styles = StyleSheet.create({
   container: {
@@ -62,6 +112,13 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginBottom: 10,
+    alignSelf: "flex-start",
+    paddingLeft: 30,
   },
   registerText: {
     paddingTop: 35,
