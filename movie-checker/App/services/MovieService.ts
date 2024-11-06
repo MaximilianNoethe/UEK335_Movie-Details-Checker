@@ -4,11 +4,13 @@ import login from "./AuthService";
 type Movie = {
   id: number;
   Title: string;
+  Director?: string;
   "Release Date": string;
-  "MPAA Rating": string;
-  "Running Time min": number;
-  "IMDB Rating": number;
-  "IMDB Votes": number;
+  "MPAA Rating"?: string;
+  "Major Genre"?: string;
+  "Running Time min"?: number;
+  "IMDB Rating"?: number;
+  "IMDB Votes"?: number;
 };
 
 const email = "gianluca@noseryoung.ch";

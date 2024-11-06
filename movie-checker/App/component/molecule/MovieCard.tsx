@@ -9,7 +9,6 @@ type MovieCardProps = {
 
 export default function MovieCard({movie}: MovieCardProps) {
     return (
-        <View style={styles.container}>
             <Card style={moviecard.cardContainer}>
                 <Card.Content>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
@@ -31,14 +30,14 @@ export default function MovieCard({movie}: MovieCardProps) {
                         </Text>
                         <View style={{flexDirection: 'row', alignItems: 'center', marginRight: -15}}>
                             <Text style={[moviecard.fontAndColor, moviecard.IMDBRating]}>
-                                {movie["IMDB Rating"]}/10
+                                {movie["IMDB Rating"] ? movie["IMDB Rating"] : "?"}/10
                             </Text>
                             <IconButton icon="star" iconColor="#FFFD54" style={{ marginLeft: 0, padding: 0 }}/>
                         </View>
                     </View>
                 </Card.Content>
             </Card>
-        </View>
+
     );
 }
 
