@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Text, TextInput, PaperProvider } from "react-native-paper";
 import { View, StyleSheet, Alert } from "react-native";
-import UserService from "../../services/UserService"; // Assuming a UserService is used for registration
+import UserService from "../../services/UserService"; 
 
 const RegisterPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
