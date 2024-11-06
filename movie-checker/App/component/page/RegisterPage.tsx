@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Text, PaperProvider, TextInput } from "react-native-paper";
+import { Button, PaperProvider, TextInput } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
+import UserService from "../../services/UserService";
 
 export default function RegisterPage() {
     return (
