@@ -21,6 +21,20 @@ export const login = async (email: string, password: string) => {
   }
 };
 
+interface Navigation {
+  navigate: (screen: string) => void;
+}
+
+export const logout = async (navigation: Navigation): Promise<void> => {
+  try {
+    await AsyncStorage.multiRemove(["accessToken", "userId"]);
+    console.log("User logged out");
+    navigation.navigate("Login");
+  } catch (error) {
+    throw error;
+  }
+};
+
 // This code will be used when LoginPage is implemented
 
 /*export type loginRequest = {
