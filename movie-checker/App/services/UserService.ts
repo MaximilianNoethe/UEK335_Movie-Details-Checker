@@ -1,4 +1,3 @@
-import { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from "../api/Api";
 import { login } from './AuthService';
@@ -41,9 +40,18 @@ const UserService = () => ({
                 console.log("User ID not found in AsyncStorage");
                 return;
             }
+            const response = await api.put(`users/${userId}`, user);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error occurred:", error);
+        }
+    },
 
-            const data = { user };
-            const response = await api.put(`users/${userId}`, data);
+    createUser: async (newUser: User) => {
+        try{
+            const response = await api.post(`register`, newUser);
+            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error("Error occurred:", error);
