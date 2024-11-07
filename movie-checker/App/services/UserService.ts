@@ -14,11 +14,19 @@ export type User = {
 
 const UserService = (api: AxiosInstance = defaultInstance) => ({
 
+    /**
+     * Retrieves the data of the currently authenticated user based on the user ID stored in AsyncStorage.
+     *
+     * @async
+     * @function
+     * @returns {Promise<User>} A promise resolving to the user's data. Returns an empty User object if no user ID is found or if an error occurs.
+     * @throws Logs an error if the request fails.
+     */
+
     getCurrentUserData: async (): Promise<User> => {
         try {
             const userId = await AsyncStorage.getItem("userId");
             if (!userId) {
-                console.log("User ID not found in AsyncStorage");
                 return {} as User;
             }
 
@@ -30,25 +38,19 @@ const UserService = (api: AxiosInstance = defaultInstance) => ({
         }
     },
 
-    updateUser: async (user: User) => {
-        try {
-            const userId = await AsyncStorage.getItem("userId");
-            if (!userId) {
-                console.log("User ID not found in AsyncStorage");
-                return;
-            }
-            const response = await api.put(`users/${userId}`, user);
-            console.log(response.data);
-            return response.data;
-        } catch (error) {
-            console.error("Error occurred:", error);
-        }
-    },
+    /**
+     * Registers a new user with the provided details.
+     *
+     * @async
+     * @function
+     * @param {User} newUser - An object containing the new user's details, including userId, email, firstname, lastname, age, and password.
+     * @returns {Promise<any>} A promise resolving to the response data upon successful creation, or undefined if an error occurs.
+     * @throws Logs an error if the request fails.
+     */
 
     createUser: async (newUser: User) => {
         try{
             const response = await api.post(`register`, newUser);
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error("Error occurred:", error);

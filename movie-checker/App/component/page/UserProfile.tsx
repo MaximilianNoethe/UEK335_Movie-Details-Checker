@@ -7,7 +7,6 @@ import LoginService from "../../services/AuthService";
 
 const UserProfilePage = ({navigation}) => {
 
-
     type User = {
         userId: string;
         email: string;
@@ -24,20 +23,33 @@ const UserProfilePage = ({navigation}) => {
         age: 0,
     });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await UserService().getCurrentUserData();
-                setUserData(data);
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
-        
-        fetchData();
-    }, []);
+    /**
+     * Fetches the current user's profile data from the UserService and updates
+     * the userData state.
+     *
+     * @async
+     * @function
+     * @returns {Promise<void>} A promise that resolves when the user data is successfully fetched.
+     * @throws Logs an error to the console if the request fails.
+     */
+    const fetchData = async () => {
+        try {
+            const data = await UserService().getCurrentUserData();
+            setUserData(data);
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    };
 
-
+    /**
+     * Logs out the current user by clearing authentication data, then navigates
+     * to the Login page.
+     *
+     * @async
+     * @function
+     * @returns {Promise<void>} A promise that resolves when the user is successfully logged out.
+     * @throws Logs an error to the console if the logout process fails.
+     */
     const handleLogout = async(): Promise<void> => {
         try {
             await LoginService().logout();
@@ -45,7 +57,11 @@ const UserProfilePage = ({navigation}) => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
     return (

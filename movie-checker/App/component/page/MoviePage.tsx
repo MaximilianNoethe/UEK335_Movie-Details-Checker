@@ -10,6 +10,12 @@ const MoviePage = ({navigation}) => {
     const [moviesData, setMoviesData] = useState<MovieDetails[]>([]);
     const [isAscending, setIsAscending] = useState(true);
 
+    /**
+     * Fetches a list of movies from the `MovieService` and updates the `moviesData` state.
+     * Logs an error if the fetch operation fails.
+     *
+     * @returns A promise that resolves once the movies data is fetched and set in the state.
+     */
     const fetchData = async () => {
         try {
             const data = await MovieService().getAllMovies();
@@ -19,19 +25,33 @@ const MoviePage = ({navigation}) => {
         }
     };
 
-    const handleNavigate = async () => {        
-              navigation.navigate("CreateMoviePage"); 
+    /**
+     * Navigates to the "CreateMoviePage" screen, allowing the user to add a new movie.
+     * Triggered by tapping the floating action button (FAB).
+     */
+    const handleNavigate = async () => {
+        navigation.navigate("CreateMoviePage");
       };
 
-    useFocusEffect(
-        useCallback(() => {
-            fetchData();
-        }, []));
-
+    /**
+     * Opens the "MovieDetails" screen with the selected movie's data passed as a parameter.
+     * Triggered by selecting a movie from the list.
+     *
+     * @param movie - The selected `MovieDetails` object, containing details such as title and genre.
+     */
     const handleMovieSelect = (movie: MovieDetails) => {
         navigation.navigate("MovieDetails", {movie})
     };
 
+    /**
+     * Sorts the list of movies alphabetically by title in ascending or descending order.
+     * The sort order toggles each time the function is called.
+     *
+     * - If `isAscending` is true, sorts A to Z.
+     * - If `isAscending` is false, sorts Z to A.
+     *
+     * After sorting, updates the `moviesData` state and toggles `isAscending`.
+     */
     const sortMovies = () => {
         const sortedMovies = [ ...moviesData].sort((a, b) =>{
            if (a.Title < b.Title) return isAscending ? -1 : 1;
@@ -42,6 +62,10 @@ const MoviePage = ({navigation}) => {
         setIsAscending (!isAscending);
     }
 
+    useFocusEffect(
+        useCallback(() => {
+            fetchData();
+        }, []));
 
     return (
         <View>

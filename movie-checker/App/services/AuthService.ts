@@ -9,7 +9,20 @@ export type loginRequest = {
 };
 
 const LoginService = (api: AxiosInstance = defaultInstance) => ({
-  login: async (param: loginRequest) => {    
+
+  /**
+   * Authenticates a user using the provided login credentials.
+   * If successful, stores the access token and user ID in AsyncStorage.
+   * If the user does not exist, an alert is shown and `null` is returned.
+   *
+   * @async
+   * @function
+   * @param {loginRequest} param - The login credentials containing `email` and `password`.
+   * @returns {Promise<any | null>} - A promise resolving to the response object if successful, or `null` if the user does not exist.
+   * @throws Will throw an error if the login request fails.
+   */
+
+  login: async (param: loginRequest): Promise<any | null> => {
     try {
       const response = await api.post("login", param);
       const { accessToken, user } = response.data;
@@ -17,7 +30,6 @@ const LoginService = (api: AxiosInstance = defaultInstance) => ({
       if (user && user.id) {
         await AsyncStorage.setItem("accessToken", accessToken);
         await AsyncStorage.setItem("userId", user.id.toString());
-        console.log("User ID saved to AsyncStorage:", user.id);
       } else {
         Alert.alert("Login Failed", "User does not exist. Please check your credentials or register.");
         return null;
@@ -31,7 +43,17 @@ const LoginService = (api: AxiosInstance = defaultInstance) => ({
     }
   },
 
-  logout: async () => {
+  /**
+   * Logs out the user by removing the access token and user ID from AsyncStorage.
+   * If an error occurs, it logs the error to the console and displays an alert.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>} - A promise that resolves when the logout process completes.
+   * @throws Will throw an error if the logout process encounters an issue.
+   */
+
+  logout: async (): Promise<void> => {
     try {
       await AsyncStorage.removeItem("accessToken");
       await AsyncStorage.removeItem("userId");

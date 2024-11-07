@@ -16,11 +16,22 @@ const RegisterPage = ({ navigation }) => {
   const [ageError, setAgeError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  /**
+   * Validates if the input string is a properly formatted email address.
+   *
+   * @param input - The email string to validate.
+   * @returns `true` if the email format is valid, otherwise `false`.
+   */
   const validateEmail = (input: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(input);
   };
 
+  /**
+   * Updates the email state and sets an error message if the email format is invalid.
+   *
+   * @param text - The new email text entered by the user.
+   */
   const handleEmailChange = (text: string) => {
     setEmail(text);
     setEmailError(
@@ -28,16 +39,31 @@ const RegisterPage = ({ navigation }) => {
     );
   };
 
+  /**
+   * Updates the first name state and sets an error message if the field is empty.
+   *
+   * @param text - The new first name text entered by the user.
+   */
   const handleFirstNameChange = (text: string) => {
     setFirstName(text);
     setFirstNameError(text ? "" : "Firstname is required");
   };
 
+  /**
+   * Updates the last name state and sets an error message if the field is empty.
+   *
+   * @param text - The new last name text entered by the user.
+   */
   const handleLastNameChange = (text: string) => {
     setLastName(text);
     setLastNameError(text ? "" : "Lastname is required");
   };
 
+  /**
+   * Updates the age state and sets an error message if the input is not a positive number.
+   *
+   * @param text - The new age text entered by the user.
+   */
   const handleAgeChange = (text: string) => {
     setAge(text);
     const numericAge = parseInt(text, 10);
@@ -46,11 +72,31 @@ const RegisterPage = ({ navigation }) => {
     );
   };
 
+  /**
+   * Updates the password state and sets an error message if the password is too short.
+   *
+   * @param text - The new password text entered by the user.
+   */
   const handlePasswordChange = (text: string) => {
     setPassword(text);
     setPasswordError(text.length >= 6 ? "" : "Password must be at least 6 characters");
   };
 
+  /**
+   * Handles user registration by validating inputs and calling the user service.
+   *
+   * If any input errors are present, an alert prompts the user to fix them.
+   * When inputs are valid, it submits the data to `UserService` to create a new user account.
+   *
+   * On successful registration:
+   * - Displays a success alert.
+   * - Navigates the user to the Login page.
+   *
+   * On failure, displays an alert indicating registration failure.
+   *
+   * @async
+   * @returns {Promise<void>} Performs an asynchronous registration operation.
+   */
   const handleRegister = async () => {
     if (
       emailError ||

@@ -8,11 +8,23 @@ const LoginPage = ({navigation}) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
 
+  /**
+   * Validates the email address format using a regular expression.
+   *
+   * @param input - The email address input string to validate.
+   * @returns A boolean indicating whether the input is a valid email format.
+   */
   const validateEmail = (input: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(input);
   };
 
+  /**
+   * Handles changes to the email input field, updates the email state,
+   * and validates the email format.
+   *
+   * @param text - The email address input text to set in the state.
+   */
   const handleEmailChange = (text: string) => {
     setEmail(text);
     if (!validateEmail(text)) {
@@ -22,6 +34,13 @@ const LoginPage = ({navigation}) => {
     }
   };
 
+  /**
+   * Handles the login process. Attempts to log in using the provided email and password.
+   * If successful, navigates to the "Home" screen.
+   *
+   * @returns A promise that resolves if the login is successful and navigates to the "Home" screen.
+   * @throws Throws an error if the login fails.
+   */
   const handleLogin = async () => {
     try {
         const response = await LoginService().login({ email, password });        

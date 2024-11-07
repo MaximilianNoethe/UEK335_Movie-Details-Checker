@@ -10,17 +10,25 @@ import MovieService from "../../services/MovieService";
 export default function MovieDetailPage({navigation, route}) {
     const {movie} = route.params;
 
-
+    /**
+     * Handles the deletion of a movie by calling the MovieService's deleteMovie method.
+     * Upon successful deletion, navigates back to the "Movies" page.
+     *
+     * @param id - The ID of the movie to be deleted.
+     */
     const handleDeleteMovie = (id : number) => {
-        console.log(id);
             MovieService().deleteMovie(id)
                 .then(() =>
                 navigation.navigate("Movies")
                 );
     }
 
+    /**
+     * Handles the editing of a movie by navigating to the "MovieEditPage" with the movie ID.
+     *
+     * @param id - The ID of the movie to be edited.
+     */
     const handleEditMovie =  (id : number) => {
-        console.log(id);
         navigation.navigate("MovieEditPage", {id});
     }
 

@@ -13,9 +13,17 @@ const CreateMoviePage = ({ navigation }) => {
   const [rtRating, setRtRating] = useState("");
   const [mpaaRating, setMpaaRating] = useState("");
 
-
+  /**
+   * Handles the creation of a new movie.
+   * Gathers form input values, creates a new movie object, and calls the movie service to add it.
+   * If successful, shows a success alert and navigates back to the movie list page.
+   * If there's an error, logs it to the console and shows an error alert.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>}
+   */
   const handleCreate = async () => {
-
     const newMovie = {
       Title: title,
       "Release Date": releaseDate,
@@ -29,17 +37,20 @@ const CreateMoviePage = ({ navigation }) => {
 
     try {
       await MovieService().createMovie(newMovie);
-      console.log("Movie created successfully");
-      console.log(newMovie);
-      
       Alert.alert("Movie Created", "Movie successfully created");
       navigation.navigate("Movies");
     } catch (error) {
       console.error("Error creating movie:", error);
       Alert.alert("Error","Error creating movie");
     }
-  };
+  }
 
+  /**
+   * Navigates back to the "Movies" screen without saving any changes.
+   *
+   * @function
+   * @returns {void}
+   */
   const handleCancel = () => {
     navigation.navigate("Movies");
   };

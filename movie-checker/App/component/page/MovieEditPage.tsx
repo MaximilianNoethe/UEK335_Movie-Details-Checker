@@ -4,6 +4,7 @@ import { TextInput, Button } from "react-native-paper";
 import MovieService from "../../services/MovieService";
 import {MovieDetails} from "../../models/models";
 
+
 export default function MovieEditPage({navigation, route}) {
     const {id} = route.params;
 
@@ -16,7 +17,15 @@ export default function MovieEditPage({navigation, route}) {
     const [rtRating, setRtRating] = useState("");
     const [mpaaRating, setMpaaRating] = useState("");
 
-
+    /**
+     * Fetches data for the specified movie by ID and populates state variables
+     * with the movie details.
+     *
+     * @async
+     * @function
+     * @returns {Promise<void>} A promise that resolves when movie data is successfully retrieved.
+     * @throws Logs an error to the console if the request fails.
+     */
     const fetchData = async () => {
         try {
             const data = await MovieService().getMovieById(id);
@@ -33,10 +42,15 @@ export default function MovieEditPage({navigation, route}) {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [id])
-
+    /**
+     * Handles saving the edited movie data by updating it in the database
+     * and navigating to the MovieDetails page with the updated data.
+     *
+     * @async
+     * @function
+     * @returns {Promise<void>} A promise that resolves when the movie data is successfully updated.
+     * @throws Logs an error to the console if the update fails, and shows an alert.
+     */
     const handleEdit = async () => {
         const newMovie : MovieDetails = {
             id,
@@ -51,9 +65,7 @@ export default function MovieEditPage({navigation, route}) {
         };
 
         try {
-            console.log("the new movie",newMovie);
             await MovieService().updateMovie(id, newMovie);
-            console.log("Movie updated successfully");
             Alert.alert("Succesfully Edited","Movie updated successfully");
             navigation.navigate("MovieDetails", {movie : newMovie});
         } catch (error) {
@@ -62,12 +74,19 @@ export default function MovieEditPage({navigation, route}) {
         }
     };
 
+    /**
+     * Navigates back to the Movies page without saving any changes.
+     *
+     * @function
+     * @returns {void}
+     */
     const handleCancel = () => {
         navigation.navigate("Movies");
     };
 
-
-    //const { movId, movTitle, movDir, movReleaseDate, movMPAA, movMajor, movRunTime, movIMDB, movIMDBvot} = route.params;
+    useEffect(() => {
+        fetchData();
+    }, [id])
 
     return (
         <View style={styles.container}>
