@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { IconButton, Card } from "react-native-paper";
 import MovieService from "../../services/MovieService";
-import UserService from "../../services/UserService"; // Import UserService
+import UserService from "../../services/UserService";
 import MovieCard from "../molecule/MovieCard";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomePage() {
   type User = {
@@ -15,33 +16,49 @@ export default function HomePage() {
     firstname: "Failed to load data",
   }); 
 
-  
-  useEffect(() => {
-    fetchRandomMovie();
-    fetchMovieCount();
-    fetchUserData(); 
-  }, []);
 
+  /**
+   * Fetches a random movie from the MovieService and sets it in the `randomMovie` state.
+   * If an error occurs, it logs the error to the console.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>}
+   */
   const fetchRandomMovie = async () => {
     try {
       const movie = await MovieService().getRandomMovie();
-      console.log("Random movie fetched:", movie);
       setRandomMovie(movie);
     } catch (error) {
       console.error("Error fetching random movie:", error);
     }
   };
 
+  /**
+   * Fetches the total count of movies from the MovieService and sets it in the `movieCount` state.
+   * If an error occurs, it logs the error to the console.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>}
+   */
   const fetchMovieCount = async () => {
     try {
       const count = await MovieService().getMovieCount();
-      console.log("Movie count fetched:", count);
       setMovieCount(count);
     } catch (error) {
       console.error("Error fetching movie count:", error);
     }
   };
 
+  /**
+   * Fetches the current user data from the UserService and sets it in the `userData` state.
+   * If an error occurs, it logs the error to the console.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>}
+   */
   const fetchUserData = async () => {
     try {
       const data = await UserService().getCurrentUserData();
@@ -50,6 +67,16 @@ export default function HomePage() {
       console.error("Error fetching user data:", error);
     }
   };
+
+  useEffect(() => {
+    fetchRandomMovie();
+    fetchUserData();
+  }, []);
+
+  useFocusEffect(
+      useCallback(() => {
+        fetchMovieCount();
+        }, []));
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -111,7 +138,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 26,
-    color: "#FFFFFF", // Adjusted for more space between welcome text and sections
+    color: "#FFFFFF",
     fontWeight: "bold",
     textAlign: "center",
   },

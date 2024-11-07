@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Avatar, TextInput, IconButton } from "react-native-paper";
 import UserService from "../../services/UserService";
+import LoginService from "../../services/AuthService";
 
-const UserProfilePage = () => {
+
+const UserProfilePage = ({navigation}) => {
+
     type User = {
         userId: string;
         email: string;
@@ -20,18 +23,46 @@ const UserProfilePage = () => {
         age: 0,
     });
 
+    /**
+     * Fetches the current user's profile data from the UserService and updates
+     * the userData state.
+     *
+     * @async
+     * @function
+     * @returns {Promise<void>} A promise that resolves when the user data is successfully fetched.
+     * @throws Logs an error to the console if the request fails.
+     */
+    const fetchData = async () => {
+        try {
+            const data = await UserService().getCurrentUserData();
+            setUserData(data);
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    };
+
+    /**
+     * Logs out the current user by clearing authentication data, then navigates
+     * to the Login page.
+     *
+     * @async
+     * @function
+     * @returns {Promise<void>} A promise that resolves when the user is successfully logged out.
+     * @throws Logs an error to the console if the logout process fails.
+     */
+    const handleLogout = async(): Promise<void> => {
+        try {
+            await LoginService().logout();
+            navigation.navigate("Login");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await UserService().getCurrentUserData();
-                setUserData(data);
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
-        
         fetchData();
     }, []);
+
 
     return (
         <View style={styles.container}>
@@ -41,9 +72,9 @@ const UserProfilePage = () => {
             <View style={styles.header}>
                 <Avatar.Icon size={95} icon="account" style={styles.avatar} />
                 <IconButton
-                    icon="pencil"
+                    icon="logout"
                     size={24}
-                    onPress={() => console.log("Navigate to ProfileEditPage")}
+                    onPress={() => handleLogout()}
                     style={styles.editIcon}
                 />
             </View>
@@ -86,8 +117,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
     },
     topBorder: {
-        height: 100,
-        backgroundColor: "#8c5c68", 
+        height: 200,
+        backgroundColor: "#B96F80", 
     },
     header: {
         flexDirection: "row",
@@ -108,7 +139,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     ageInput:{
-        width: 60,
+        width: 90,
         marginHorizontal: 16,
     }
 });

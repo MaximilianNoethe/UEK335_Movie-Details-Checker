@@ -1,7 +1,6 @@
-import { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { api } from "../api/Api";
-import { login } from './AuthService';
+import { defaultInstance } from "../api/Api";
+import { AxiosInstance } from 'axios';
 
 export type User = {
     userId: string;
@@ -9,20 +8,25 @@ export type User = {
     firstname: string;
     lastname: string;
     age: number;
+    password: string;
 };
 
-const email = "gianluca@noseryoung.ch";
-const password = "bestPassw0rd";
 
+const UserService = (api: AxiosInstance = defaultInstance) => ({
 
-const UserService = () => ({
+    /**
+     * Retrieves the data of the currently authenticated user based on the user ID stored in AsyncStorage.
+     *
+     * @async
+     * @function
+     * @returns {Promise<User>} A promise resolving to the user's data. Returns an empty User object if no user ID is found or if an error occurs.
+     * @throws Logs an error if the request fails.
+     */
 
     getCurrentUserData: async (): Promise<User> => {
-        await login(email, password);
         try {
             const userId = await AsyncStorage.getItem("userId");
             if (!userId) {
-                console.log("User ID not found in AsyncStorage");
                 return {} as User;
             }
 
@@ -34,16 +38,19 @@ const UserService = () => ({
         }
     },
 
-    updateUser: async (user: User) => {
-        try {
-            const userId = await AsyncStorage.getItem("userId");
-            if (!userId) {
-                console.log("User ID not found in AsyncStorage");
-                return;
-            }
+    /**
+     * Registers a new user with the provided details.
+     *
+     * @async
+     * @function
+     * @param {User} newUser - An object containing the new user's details, including userId, email, firstname, lastname, age, and password.
+     * @returns {Promise<any>} A promise resolving to the response data upon successful creation, or undefined if an error occurs.
+     * @throws Logs an error if the request fails.
+     */
 
-            const data = { user };
-            const response = await api.put(`users/${userId}`, data);
+    createUser: async (newUser: User) => {
+        try{
+            const response = await api.post(`register`, newUser);
             return response.data;
         } catch (error) {
             console.error("Error occurred:", error);

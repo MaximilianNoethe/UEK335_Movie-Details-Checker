@@ -1,8 +1,8 @@
-import { api } from "../api/Api";
-import login from "./AuthService";
+import { AxiosInstance } from "axios";
+import { defaultInstance } from "../api/Api";
+import {MovieDetails} from "../models/models";
 
 type Movie = {
-  id: number;
   Title: string;
   Director?: string;
   "Release Date": string;
@@ -10,26 +10,47 @@ type Movie = {
   "Major Genre"?: string;
   "Running Time min"?: number;
   "IMDB Rating"?: number;
-  "IMDB Votes"?: number;
+  "Rotten Tomatoes Rating"?: number;
 };
 
-const email = "gianluca@noseryoung.ch";
-const password = "bestPassw0rd";
 
-const MovieService = () => ({
-  getAllMovies: async () => {
-    await login(email, password);
+
+
+
+const MovieService = (api: AxiosInstance = defaultInstance) => ({
+
+  /**
+   * Fetches a list of movies with pagination.
+   * Defaults to starting from movie ID 3100, with a limit of 20 movies.
+   *
+   * @async
+   * @function
+   * @param {number} [start=3100] - The starting point for the movies list.
+   * @param {number} [limit=20] - The number of movies to retrieve.
+   * @returns {Promise<Movie[]>} A promise resolving to an array of movies.
+   * @throws Will log an error and return an empty array if the request fails.
+   */
+
+  getAllMovies: async (start: number = 3100, limit: number = 20) => {
     try {
-      const response = await api.get(`movies?start=3182&_limit=1`);
-      console.log(response.data);
+      const response = await api.get(`movies?start=${start}&_limit=${limit}`);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
     }
   },
 
-  getMovieById: async (id: string) => {
-    await login(email, password);
+  /**
+   * Fetches the details of a specific movie by its ID.
+   *
+   * @async
+   * @function
+   * @param {string} id - The ID of the movie to fetch.
+   * @returns {Promise<Movie | undefined>} A promise resolving to the movie data, or undefined if an error occurs.
+   * @throws Will log an error if the request fails.
+   */
+
+  getMovieById: async (id: string)  => {
     try {
       const response = await api.get(`movies/${id}`);
       return response.data;
@@ -38,20 +59,36 @@ const MovieService = () => ({
     }
   },
 
-  deleteMovie: async (id: string) => {
-    await login(email, password);
+  /**
+   * Deletes a specific movie by its ID.
+   *
+   * @async
+   * @function
+   * @param {number} id - The ID of the movie to delete.
+   * @returns {Promise<any>} A promise resolving to the response data upon successful deletion, or undefined if an error occurs.
+   * @throws Will log an error if the request fails.
+   */
 
+  deleteMovie: async (id: number) => {
     try {
       const response = await api.delete(`movies/${id}`);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
     }
   },
 
+  /**
+   * Creates a new movie entry with the provided data.
+   *
+   * @async
+   * @function
+   * @param {Movie} newMovie - An object containing movie details to be created.
+   * @returns {Promise<any>} A promise resolving to the created movie data, or undefined if an error occurs.
+   * @throws Will log an error if the request fails.
+   */
+
   createMovie: async (newMovie: Movie) => {
-    await login(email, password);
 
     try {
       const response = await api.post(`movies`, newMovie);
@@ -62,8 +99,18 @@ const MovieService = () => ({
     }
   },
 
-  updateMovie: async (id: string, updatedMovie: Movie) => {
-    await login(email, password);
+  /**
+   * Updates an existing movie entry with new details.
+   *
+   * @async
+   * @function
+   * @param {string} id - The ID of the movie to update.
+   * @param {MovieDetails} updatedMovie - The new details for the movie.
+   * @returns {Promise<any>} A promise resolving to the updated movie data, or undefined if an error occurs.
+   * @throws Will log an error if the request fails.
+   */
+
+  updateMovie: async (id: string, updatedMovie: MovieDetails) => {
 
     try {
       const response = await api.put(`movies/${id}`, updatedMovie);
@@ -74,19 +121,17 @@ const MovieService = () => ({
     }
   },
 
+  /**
+   * Fetches a random movie from the list of movies.
+   * Selects a random movie from the available list if data exists.
+   *
+   * @async
+   * @function
+   * @returns {Promise<Movie | null>} A promise resolving to a random movie object, or null if no movies are found or an error occurs.
+   * @throws Will log an error if the request fails.
+   */
+
   getRandomMovie: async () => {
-    /* Code snippet to use in HomePage.tsx to display random movie
-                    <IconButton
-                    icon="pencil"
-                    size={24}
-                    onPress={async () => {
-                        const randomMovie = await MovieService().getRandomMovie();
-                        setMovieData(randomMovie);
-                    }}
-                    style={styles.editIcon}
-                    />
-    */
-    await login(email, password);
     try {
       const response = await api.get(`movies`);
 
@@ -96,7 +141,6 @@ const MovieService = () => ({
         const randomIndex = Math.floor(Math.random() * response.data.length); // Select a random index in the array of movies
         const randomMovie = response.data[randomIndex];
 
-        console.log("Random movie selected:", randomMovie);
         return randomMovie;
       } else {
         console.log("No movies found in data.");
@@ -108,14 +152,21 @@ const MovieService = () => ({
     }
   },
 
+  /**
+   * Fetches the total count of movies.
+   *
+   * @async
+   * @function
+   * @returns {Promise<number | null>} A promise resolving to the total count of movies, or null if an error occurs.
+   * @throws Will log an error if the request fails.
+   */
+
+
   getMovieCount: async () => {
-    await login(email, password);
     try {
         const response = await api.get(`movies`);
         
         const totalCount = response.data ? response.data.length : 0;
-        
-        console.log("Total movie count:", totalCount);
         return totalCount;
     } catch (error) {
         console.error("Error occurred:", error);
