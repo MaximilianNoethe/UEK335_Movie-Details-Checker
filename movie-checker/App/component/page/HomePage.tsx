@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { IconButton, Card } from "react-native-paper";
 import MovieService from "../../services/MovieService";
 import UserService from "../../services/UserService"; // Import UserService
 import MovieCard from "../molecule/MovieCard";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomePage() {
   type User = {
@@ -14,13 +15,16 @@ export default function HomePage() {
   const [userData, setUserData] = useState<User>({
     firstname: "Failed to load data",
   }); 
-
   
   useEffect(() => {
     fetchRandomMovie();
-    fetchMovieCount();
     fetchUserData(); 
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+        fetchMovieCount();
+    }, []));
 
   const fetchRandomMovie = async () => {
     try {

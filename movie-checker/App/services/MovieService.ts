@@ -2,7 +2,6 @@ import { AxiosInstance } from "axios";
 import { defaultInstance } from "../api/Api";
 
 type Movie = {
-  id: number;
   Title: string;
   Director?: string;
   "Release Date": string;
@@ -15,11 +14,12 @@ type Movie = {
 
 
 
+
+
 const MovieService = (api: AxiosInstance = defaultInstance) => ({
   getAllMovies: async (start = 3100, limit = 20) => {
     try {
       const response = await api.get(`movies?start=${start}&_limit=${limit}`);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
@@ -40,7 +40,6 @@ const MovieService = (api: AxiosInstance = defaultInstance) => ({
   deleteMovie: async (id: number) => {
     try {
       const response = await api.delete(`movies/${id}`);
-      console.log("what",response.data);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
@@ -79,7 +78,6 @@ const MovieService = (api: AxiosInstance = defaultInstance) => ({
         const randomIndex = Math.floor(Math.random() * response.data.length); // Select a random index in the array of movies
         const randomMovie = response.data[randomIndex];
 
-        console.log("Random movie selected:", randomMovie);
         return randomMovie;
       } else {
         console.log("No movies found in data.");
