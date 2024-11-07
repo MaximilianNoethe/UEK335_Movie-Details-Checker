@@ -13,83 +13,9 @@ const CreateMoviePage = ({ navigation }) => {
   const [rtRating, setRtRating] = useState("");
   const [mpaaRating, setMpaaRating] = useState("");
 
-  const [titleError, setTitleError] = useState("");
-  const [directorError, setDirectorError] = useState("");
-  const [genreError, setGenreError] = useState("");
-  const [releaseDateError, setReleaseDateError] = useState("");
-  const [runningTimeError, setRunningTimeError] = useState("");
-  const [imdbRatingError, setImdbRatingError] = useState("");
-  const [rtRatingError, setRtRatingError] = useState("");
-  const [mpaaRatingError, setMpaaRatingError] = useState("");
-
-  const handleTitleChange = (text: string) => {
-    setTitle(text);
-    setTitleError(text ? "" : "Title is required");
-  };
-
-  const handleDirectorChange = (text: string) => {
-    setDirector(text);
-    setDirectorError(text ? "" : "Director is required");
-  };
-
-  const handleGenreChange = (text: string) => {
-    setGenre(text);
-    setGenreError(text ? "" : "Genre is required");
-  };
-
-  const handleReleaseDateChange = (text: string) => {
-    setReleaseDate(text);
-    setReleaseDateError(text ? "" : "Release Date is required");
-  };
-
-  const handleRunningTimeChange = (text: string) => {
-    setRunningTime(text);
-    const numericRunningTime = parseInt(text, 10);
-    setRunningTimeError(
-      !numericRunningTime || numericRunningTime <= 0
-        ? "Please enter a valid running time"
-        : ""
-    );
-  };
-
-  const handleImdbRatingChange = (text: string) => {
-    setImdbRating(text);
-    const numericImdbRating = parseFloat(text);
-    setImdbRatingError(
-      !numericImdbRating || numericImdbRating < 0 || numericImdbRating > 10
-        ? "Please enter a valid IMDB rating"
-        : ""
-    );
-  };
-
-  const handleRtRatingChange = (text: string) => {
-    setRtRating(text);
-    const numericRtRating = parseInt(text, 10);
-    setRtRatingError(
-      !numericRtRating || numericRtRating < 0 || numericRtRating > 100
-        ? "Please enter a valid Rotten Tomatoes rating"
-        : ""
-    );
-  };
-
-  const handleMpaaRatingChange = (text: string) => {
-    setMpaaRating(text);
-    setMpaaRatingError(text ? "" : "MPAA Rating is required");
-  };
 
   const handleCreate = async () => {
-    if (
-      titleError ||
-      directorError ||
-      genreError ||
-      releaseDateError ||
-      runningTimeError ||
-      imdbRatingError ||
-      rtRatingError ||
-      mpaaRatingError
-    ) {
-      Alert.alert("Error", "Please fill in all fields before submitting");
-    }
+
     const newMovie = {
       Title: title,
       "Release Date": releaseDate,
@@ -127,59 +53,49 @@ const CreateMoviePage = ({ navigation }) => {
       <TextInput
         label="Movie Title"
         value={title}
-        onChangeText={handleTitleChange}
+        onChangeText={setTitle}
         mode="outlined"
         style={styles.input}
-        error={!!titleError}
       />
-      {titleError ? <Text style={styles.errorText}>{titleError}</Text> : null}
 
       <TextInput
         label="Director"
         value={director}
-        onChangeText={handleDirectorChange}
+        onChangeText={setDirector}
         mode="outlined"
         style={styles.input}
-        error={!!directorError}
       />
-      {directorError ? <Text style={styles.errorText}>{directorError}</Text> : null}
 
       <TextInput
         label="Genre"
         value={genre}
-        onChangeText={handleGenreChange}
+        onChangeText={setGenre}
         mode="outlined"
         style={styles.input}
-        error={!!genreError}
       />
-      {genreError ? <Text style={styles.errorText}>{genreError}</Text> : null}
 
       <TextInput
         label="Release Date"
         value={releaseDate}
-        onChangeText={handleReleaseDateChange}
+        onChangeText={setReleaseDate}
         mode="outlined"
         style={styles.input}
-        error={!!releaseDateError}
       />
-      {releaseDateError ? <Text style={styles.errorText}>{releaseDateError}</Text> : null}
 
       <TextInput
         label="Running Time (min)"
         value={runningTime}
-        onChangeText={handleRunningTimeChange}
+        onChangeText={setRunningTime}
         mode="outlined"
         style={styles.input}
         keyboardType="numeric"
-        error={!!runningTimeError}
       />
-      {runningTimeError ? <Text style={styles.errorText}>{runningTimeError}</Text> : null}
 
       <View style={styles.ratingContainer}>
         <TextInput
           label="MPAA Rating"
           value={mpaaRating}
-          onChangeText={handleMpaaRatingChange}
+          onChangeText={setMpaaRating}
           mode="outlined"
           style={styles.ratingInput}
         />
@@ -187,7 +103,7 @@ const CreateMoviePage = ({ navigation }) => {
         <TextInput
           label="IMDB Rating"
           value={imdbRating}
-          onChangeText={handleImdbRatingChange}
+          onChangeText={setImdbRating}
           mode="outlined"
           style={styles.ratingInput}
           keyboardType="numeric"
@@ -195,7 +111,7 @@ const CreateMoviePage = ({ navigation }) => {
         <TextInput
           label="Rotten Tomatoes"
           value={rtRating}
-          onChangeText={handleRtRatingChange}
+          onChangeText={setRtRating}
           mode="outlined"
           style={styles.ratingInput}
           keyboardType="numeric"
