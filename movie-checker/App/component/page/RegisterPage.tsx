@@ -30,12 +30,12 @@ const RegisterPage = ({ navigation }) => {
 
   const handleFirstNameChange = (text: string) => {
     setFirstName(text);
-    setFirstNameError(text ? "" : "First name is required");
+    setFirstNameError(text ? "" : "Firstname is required");
   };
 
   const handleLastNameChange = (text: string) => {
     setLastName(text);
-    setLastNameError(text ? "" : "Last name is required");
+    setLastNameError(text ? "" : "Lastname is required");
   };
 
   const handleAgeChange = (text: string) => {
@@ -103,7 +103,7 @@ const RegisterPage = ({ navigation }) => {
 
           <TextInput
             mode="outlined"
-            label="Vorname"
+            label="Firstname"
             value={firstname}
             onChangeText={handleFirstNameChange}
             style={styles.input}
@@ -115,7 +115,7 @@ const RegisterPage = ({ navigation }) => {
 
           <TextInput
             mode="outlined"
-            label="Nachname"
+            label="Lastname"
             value={lastname}
             onChangeText={handleLastNameChange}
             style={styles.input}

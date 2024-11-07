@@ -19,6 +19,10 @@ const MoviePage = ({navigation}) => {
         }
     };
 
+    const handleNavigate = async () => {        
+              navigation.navigate("CreateMoviePage"); 
+      };
+
     useFocusEffect(
         useCallback(() => {
             fetchData();
@@ -64,8 +68,10 @@ const MoviePage = ({navigation}) => {
                     </View>
                 )}
             </Animated.ScrollView>
+
             <FAB icon="plus" color="#fff" customSize={70}
-                 style={{position: "absolute", right: 20, bottom: 100, borderRadius: 50}}/>
+                 style={{position: "absolute", right: 20, bottom: 100, borderRadius: 50}}
+                 onPress={() => handleNavigate()}/>
         </View>
     );
 }

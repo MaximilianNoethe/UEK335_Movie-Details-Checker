@@ -9,6 +9,8 @@ import LoginPage from "../page/LoginPage";
 import MovieDetailPage from "../page/MovieDetailPage";
 import RegisterPage from "../page/RegisterPage";
 import MovieEditPage from "../page/MovieEditPage";
+import CreateMoviePage from "../page/CreateMoviePage";
+
 
 const Tab = createBottomTabNavigator();
 export default function NavBar() {
@@ -78,6 +80,7 @@ export default function NavBar() {
                     <Tab.Screen name="Login" component={LoginPage} />
                     <Tab.Screen name="Register" component={RegisterPage} />
                     <Tab.Screen name="MovieEditPage" component={MovieEditPage} />
+                    <Tab.Screen name="CreateMoviePage" component={CreateMoviePage} />
                 </Tab.Group>
                 <Tab.Group screenOptions={{tabBarItemStyle:{display: "none"}}}>
                     <Tab.Screen name="MovieDetails" component={MovieDetailPage} />
