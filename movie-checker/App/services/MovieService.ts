@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { defaultInstance } from "../api/Api";
+import {MovieDetails} from "../models/models";
 
 type Movie = {
   id: number;
@@ -10,7 +11,7 @@ type Movie = {
   "Major Genre"?: string;
   "Running Time min"?: number;
   "IMDB Rating"?: number;
-  "IMDB Votes"?: number;
+  "Rotten Tomatoes Rating"?: number;
 };
 
 
@@ -58,7 +59,7 @@ const MovieService = (api: AxiosInstance = defaultInstance) => ({
     }
   },
 
-  updateMovie: async (id: string, updatedMovie: Movie) => {
+  updateMovie: async (id: string, updatedMovie: MovieDetails) => {
 
     try {
       const response = await api.put(`movies/${id}`, updatedMovie);

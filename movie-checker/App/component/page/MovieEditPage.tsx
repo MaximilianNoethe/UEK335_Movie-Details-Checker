@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import MovieService from "../../services/MovieService";
+import {MovieDetails} from "../../models/models";
 
 export default function MovieEditPage({navigation, route}) {
-    const [title, setTitle] = useState("");
+    const {id} = route.params;
+
+    const [title , setTitle] = useState("" );
     const [director, setDirector] = useState("");
     const [genre, setGenre] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
@@ -13,22 +16,46 @@ export default function MovieEditPage({navigation, route}) {
     const [rtRating, setRtRating] = useState("");
     const [mpaaRating, setMpaaRating] = useState("");
 
+
+    const fetchData = async () => {
+        try {
+            const data = await MovieService().getMovieById(id);
+            setTitle(data.Title || "");
+            setDirector(data.Director || "");
+            setGenre(data["Major Genre"] || "");
+            setReleaseDate(data["Release Date"] || "");
+            setRunningTime(data["Running Time min"]?.toString() || "");
+            setImdbRating(data["IMDB Rating"]?.toString() || "");
+            setRtRating(data["Rotten Tomatoes Rating"]?.toString() || "");
+            setMpaaRating(data["MPAA Rating"] || "");
+        } catch (error) {
+            console.error("Error fetching movie data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [id])
+
     const handleEdit = async () => {
-        const newMovie = {
+        const newMovie : MovieDetails = {
+            id,
             Title: title,
             "Release Date": releaseDate,
             "Director": director,
-            "Genre": genre,
+            "Major Genre": genre,
             "MPAA Rating": mpaaRating,
-            "Running Time min": parseInt(runningTime, 10),
-            "IMDB Rating": parseFloat(imdbRating),
-            "Rotten Tomatoes Rating": parseInt(rtRating, 10),
+            "Running Time min": parseInt(runningTime, 10) || 0,
+            "IMDB Rating": parseFloat(imdbRating) || 0,
+            "Rotten Tomatoes Rating": parseInt(rtRating, 10) || 0,
         };
 
         try {
-            await MovieService().updateMovie(0,newMovie);
+            console.log("the new movie",newMovie);
+            await MovieService().updateMovie(id, newMovie);
             console.log("Movie updated successfully");
             alert("Movie updated successfully");
+            navigation.navigate("MovieDetails", {movie : newMovie});
             // navigation back to MoviePage implemented here
         } catch (error) {
             console.error("Error creating movie:", error);
@@ -37,8 +64,9 @@ export default function MovieEditPage({navigation, route}) {
     };
 
     const handleCancel = () => {
-        // navigation back to MoviePage implemented here
+        navigation.navigate("Movies");
     };
+
 
     //const { movId, movTitle, movDir, movReleaseDate, movMPAA, movMajor, movRunTime, movIMDB, movIMDBvot} = route.params;
 

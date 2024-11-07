@@ -21,17 +21,7 @@ export default function MovieDetailPage({navigation, route}) {
 
     const handleEditMovie =  (id : number) => {
         console.log(id);
-        navigation.navigate("MovieEditPage", {
-            movId: id,
-            movTitle: movie["Title"],
-            movDir: movie["Director"],
-            movReleaseDate: movie["Release Date"],
-            movMPAA: movie["MPAA Rating"],
-            movMajor: movie["Major Genre"],
-            movRunTime: movie["Running Time min"],
-            movIMDB: movie["IMDB Rating"],
-            movIMDBvot: movie["IMDB Votes"],
-        });
+        navigation.navigate("MovieEditPage", {id});
     }
 
     return (
@@ -56,7 +46,7 @@ export default function MovieDetailPage({navigation, route}) {
                     icon="pencil"
                     size={24}
                     iconColor="#fff"
-                    onPress={() => console.log("Navigate to MovieEditPage")}
+                    onPress={() => handleEditMovie(movie.id)}
                     style={{ ...styles.iconButton, borderColor: '#fff', borderWidth: 2 }}
                 />
             </View>
