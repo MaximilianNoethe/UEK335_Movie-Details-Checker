@@ -14,6 +14,8 @@ type Movie = {
 
 
 
+
+
 const MovieService = (api: AxiosInstance = defaultInstance) => ({
   getAllMovies: async (start = 3100, limit = 20) => {
     try {
