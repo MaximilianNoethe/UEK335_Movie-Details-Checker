@@ -19,6 +19,11 @@ export default function MovieDetailPage({navigation, route}) {
                 );
     }
 
+    const handleEditMovie =  (id : number) => {
+        console.log(id);
+        navigation.navigate("MovieEditPage", {id});
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.titleAndButtons}>
@@ -41,7 +46,7 @@ export default function MovieDetailPage({navigation, route}) {
                     icon="pencil"
                     size={24}
                     iconColor="#fff"
-                    onPress={() => console.log("Navigate to MovieEditPage")}
+                    onPress={() => handleEditMovie(movie.id)}
                     style={{ ...styles.iconButton, borderColor: '#fff', borderWidth: 2 }}
                 />
             </View>
