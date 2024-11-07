@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import MovieService from "../../services/MovieService";
 import {MovieDetails} from "../../models/models";
@@ -54,9 +54,8 @@ export default function MovieEditPage({navigation, route}) {
             console.log("the new movie",newMovie);
             await MovieService().updateMovie(id, newMovie);
             console.log("Movie updated successfully");
-            alert("Movie updated successfully");
+            Alert.alert("Succesfully Edited","Movie updated successfully");
             navigation.navigate("MovieDetails", {movie : newMovie});
-            // navigation back to MoviePage implemented here
         } catch (error) {
             console.error("Error creating movie:", error);
             alert("Error creating movie");
