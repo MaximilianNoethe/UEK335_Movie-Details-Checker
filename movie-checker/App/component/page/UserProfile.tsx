@@ -4,7 +4,10 @@ import { Avatar, TextInput, IconButton } from "react-native-paper";
 import UserService from "../../services/UserService";
 import LoginService from "../../services/AuthService";
 
-const UserProfilePage = () => {
+
+const UserProfilePage = ({navigation}) => {
+
+
     type User = {
         userId: string;
         email: string;
@@ -34,6 +37,17 @@ const UserProfilePage = () => {
         fetchData();
     }, []);
 
+
+    const handleLogout = async(): Promise<void> => {
+        try {
+            await LoginService().logout();
+            navigation.navigate("Login");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     return (
         <View style={styles.container}>
 
@@ -42,9 +56,9 @@ const UserProfilePage = () => {
             <View style={styles.header}>
                 <Avatar.Icon size={95} icon="account" style={styles.avatar} />
                 <IconButton
-                    icon="pencil"
+                    icon="logout"
                     size={24}
-                    //onPress={() => LoginService().logout()}
+                    onPress={() => handleLogout()}
                     style={styles.editIcon}
                 />
             </View>
@@ -87,8 +101,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
     },
     topBorder: {
-        height: 100,
-        backgroundColor: "#8c5c68", 
+        height: 200,
+        backgroundColor: "#B96F80", 
     },
     header: {
         flexDirection: "row",
@@ -109,7 +123,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     ageInput:{
-        width: 60,
+        width: 90,
         marginHorizontal: 16,
     }
 });

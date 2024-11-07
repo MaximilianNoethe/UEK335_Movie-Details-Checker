@@ -59,7 +59,7 @@ const RegisterPage = ({ navigation }) => {
       ageError ||
       passwordError
     ) {
-      Alert.alert("Error", "Please fix the errors before submitting");
+      Alert.alert("Error", "Please fill in all fields before submitting");
       return;
     }
 

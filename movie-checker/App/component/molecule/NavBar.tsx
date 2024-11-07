@@ -7,7 +7,7 @@ import {IconButton} from "react-native-paper";
 import UserProfile from "../page/UserProfile";
 import LoginPage from "../page/LoginPage";
 import MovieDetailPage from "../page/MovieDetailPage";
-//import RegisterPage from "../page/RegisterPage";
+import RegisterPage from "../page/RegisterPage";
 
 const Tab = createBottomTabNavigator();
 export default function NavBar() {
@@ -75,6 +75,7 @@ export default function NavBar() {
                 />
                 <Tab.Group screenOptions={{headerShown: false, tabBarStyle:{display: "none"}, tabBarItemStyle:{display: "none"}}} >
                     <Tab.Screen name="Login" component={LoginPage} />
+                    <Tab.Screen name="Register" component={RegisterPage} />
                 </Tab.Group>
                 <Tab.Group screenOptions={{tabBarItemStyle:{display: "none"}}}>
                     <Tab.Screen name="MovieDetails" component={MovieDetailPage} />
