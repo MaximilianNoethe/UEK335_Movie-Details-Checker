@@ -1,32 +1,32 @@
-import { api } from "../api/Api";
-import login from "./AuthService";
+import { AxiosInstance } from "axios";
+import { defaultInstance } from "../api/Api";
 
 type Movie = {
   Title: string;
+  Director?: string;
   "Release Date": string;
-  "MPAA Rating": string;
-  "Running Time min": number;
-  "IMDB Rating": number;
-  "IMDB Votes": number;
+  "MPAA Rating"?: string;
+  "Major Genre"?: string;
+  "Running Time min"?: number;
+  "IMDB Rating"?: number;
+  "IMDB Votes"?: number;
 };
 
-const email = "gianluca@noseryoung.ch";
-const password = "bestPassw0rd";
 
-const MovieService = () => ({
-  getAllMovies: async () => {
-    await login(email, password);
+
+const MovieService = (api: AxiosInstance = defaultInstance) => ({
+  getAllMovies: async (start = 3100, limit = 20) => {
     try {
-      const response = await api.get(`movies?start=3182&_limit=1`);
+      const response = await api.get(`movies?start=${start}&_limit=${limit}`);
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
+      return [];
     }
   },
 
   getMovieById: async (id: string) => {
-    await login(email, password);
     try {
       const response = await api.get(`movies/${id}`);
       return response.data;
@@ -35,12 +35,11 @@ const MovieService = () => ({
     }
   },
 
-  deleteMovie: async (id: string) => {
-    await login(email, password);
 
+  deleteMovie: async (id: number) => {
     try {
       const response = await api.delete(`movies/${id}`);
-      console.log(response.data);
+      console.log("what",response.data);
       return response.data;
     } catch (error) {
       console.error("Error occurred:", error);
@@ -48,7 +47,6 @@ const MovieService = () => ({
   },
 
   createMovie: async (newMovie: Movie) => {
-    await login(email, password);
 
     try {
       const response = await api.post(`movies`, newMovie);
@@ -60,7 +58,6 @@ const MovieService = () => ({
   },
 
   updateMovie: async (id: string, updatedMovie: Movie) => {
-    await login(email, password);
 
     try {
       const response = await api.put(`movies/${id}`, updatedMovie);
@@ -72,18 +69,6 @@ const MovieService = () => ({
   },
 
   getRandomMovie: async () => {
-    /* Code snippet to use in HomePage.tsx to display random movie
-                    <IconButton
-                    icon="pencil"
-                    size={24}
-                    onPress={async () => {
-                        const randomMovie = await MovieService().getRandomMovie();
-                        setMovieData(randomMovie);
-                    }}
-                    style={styles.editIcon}
-                    />
-    */
-    await login(email, password);
     try {
       const response = await api.get(`movies`);
 
@@ -106,7 +91,6 @@ const MovieService = () => ({
   },
 
   getMovieCount: async () => {
-    await login(email, password);
     try {
         const response = await api.get(`movies`);
         

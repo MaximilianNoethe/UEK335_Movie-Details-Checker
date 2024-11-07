@@ -4,13 +4,13 @@ import {MovieDetails} from "../../models/models";
 
 type MovieCardProps = {
     movie: MovieDetails;
+    onSelect: () => void;
 }
 
 
-export default function MovieCard({movie}: MovieCardProps) {
+export default function MovieCard({movie, onSelect}: MovieCardProps) {
     return (
-        <View style={styles.container}>
-            <Card style={moviecard.cardContainer}>
+            <Card style={moviecard.cardContainer} onPress={onSelect}>
                 <Card.Content>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
                         <View style={{flexDirection: 'column'}}>
@@ -31,14 +31,14 @@ export default function MovieCard({movie}: MovieCardProps) {
                         </Text>
                         <View style={{flexDirection: 'row', alignItems: 'center', marginRight: -15}}>
                             <Text style={[moviecard.fontAndColor, moviecard.IMDBRating]}>
-                                {movie["IMDB Rating"]}/10
+                                {movie["IMDB Rating"] ? movie["IMDB Rating"] : "?"}/10
                             </Text>
                             <IconButton icon="star" iconColor="#FFFD54" style={{ marginLeft: 0, padding: 0 }}/>
                         </View>
                     </View>
                 </Card.Content>
             </Card>
-        </View>
+
     );
 }
 
@@ -46,7 +46,8 @@ const moviecard = StyleSheet.create({
     cardContainer: {
         backgroundColor: '#AD3F57',
         borderRadius: 15,
-        width: 330
+        width: 330,
+        margin: 15
     },
     fontAndColor : {
         fontFamily: "Roboto",

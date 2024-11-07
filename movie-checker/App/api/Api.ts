@@ -5,12 +5,12 @@ import axios, {
   AxiosError,
 } from "axios";
 
-export const api: AxiosInstance = axios.create({
-    baseURL: "http://192.168.1.18:3000/", // Change this to your own IP address
+export const defaultInstance: AxiosInstance = axios.create({
+    baseURL: "http://172.20.10.3:3000", // Change this to your own IP address
   });
   
 
-api.interceptors.request.use(
+defaultInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig<any>) => {
     let correctPath = config.url !== "login";
 

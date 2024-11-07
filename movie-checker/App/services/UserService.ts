@@ -1,7 +1,6 @@
-import { AxiosInstance } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { api } from "../api/Api";
-import { login } from './AuthService';
+import { defaultInstance } from "../api/Api";
+import { AxiosInstance } from 'axios';
 
 export type User = {
     userId: string;
@@ -9,16 +8,13 @@ export type User = {
     firstname: string;
     lastname: string;
     age: number;
+    password: string;
 };
 
-const email = "gianluca@noseryoung.ch";
-const password = "bestPassw0rd";
 
-
-const UserService = () => ({
+const UserService = (api: AxiosInstance = defaultInstance) => ({
 
     getCurrentUserData: async (): Promise<User> => {
-        await login(email, password);
         try {
             const userId = await AsyncStorage.getItem("userId");
             if (!userId) {
@@ -41,9 +37,18 @@ const UserService = () => ({
                 console.log("User ID not found in AsyncStorage");
                 return;
             }
+            const response = await api.put(`users/${userId}`, user);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error occurred:", error);
+        }
+    },
 
-            const data = { user };
-            const response = await api.put(`users/${userId}`, data);
+    createUser: async (newUser: User) => {
+        try{
+            const response = await api.post(`register`, newUser);
+            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error("Error occurred:", error);
