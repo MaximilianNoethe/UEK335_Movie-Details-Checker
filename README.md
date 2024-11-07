@@ -2,7 +2,7 @@
 
 ## Ressourcen
 - [Figma](https://www.figma.com/design/Isna0olURQs0Gaiw8iChIl/Wireframe-%26-Prototype?node-id=6-2&t=iZnh6C4Wfiqh4YFG-1)
-- [Dokumentation]()
+- [Dokumentation](https://github.com/MaximilianNoethe/UEK335_Movie-Details-Checker/blob/main/documentation/UEK335_Movie-Details-Checker_documentation_Kristijan_Yara_Maximilian.pdf)
 
 ## Frameworks
 - React Native
