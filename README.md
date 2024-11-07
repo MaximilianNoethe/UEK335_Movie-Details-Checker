@@ -1,7 +1,7 @@
 # UEK335_Movie-Details-Checker
 
 ## Ressourcen
-- [Figma](https://www.figma.com/design/Isna0olURQs0Gaiw8iChIl/Wireframe-%26-Prototype?node-id=6-2&node-type=canvas&t=iZnh6C4Wfiqh4YFG-0)
+- [Figma](https://www.figma.com/design/Isna0olURQs0Gaiw8iChIl/Wireframe-%26-Prototype?node-id=6-2&t=iZnh6C4Wfiqh4YFG-1)
 - [Dokumentation]()
 
 ## Frameworks
